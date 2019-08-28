@@ -1,10 +1,36 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title>DEL container test</title>
+    <script type="text/javascript">
+      function getBluetooth() {
+        navigator.bluetooth.requestDevice({
+          filters : [{ services: [0x1800, 0x180A, 0x180F, 0x1804]}]
+        
+        }).then(device => {
+          if(device)
+            console.log(device)
+        }).catch(error => {
+          console.log(error);
+        })
+      }
+    </script>
+    <style>
+      .bluetooth-test {
+        background-color: lightblue;
+        width: 30%;
+        height: 20%;
+      }
+    </style>
   </head>
   <body>
-    <h2>Test</h2>
+    <h2>Peripheral Test</h2>
+    <div id="bluetoothContainer">
+      <button onClick="javascript:getBluetooth()">Get Bluetooth</button>
+      <span id="bluetoothAttribute">
+        Test
+      </span>
+    </div>
   </body>
 </html>
