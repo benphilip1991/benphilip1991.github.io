@@ -6,11 +6,33 @@
     <script type="text/javascript">
       function getBluetooth() {
         navigator.bluetooth.requestDevice({
-          filters : [{ services: [0x1800, 0x180A, 0x180F, 0x1804]}]
+          //filters : [{ }] -- add filters to get specific devices.
+          acceptAllDevices: true // enable device discovery
         
         }).then(device => {
           if(device)
-            console.log(device)
+            console.log("Showing Device");
+            console.log(device);
+            return device.gatt.connect();
+
+        }).then(server => {
+          console.log("Showing Server");
+          console.log(server);
+          return server.getPrimaryService('battery_service');
+
+        }).then(service => {
+          console.log("Showing Service");
+          console.log(service);
+          return service.getCharacteristic('battery_level');
+
+        }).then(characteristic => {
+          console.log("Showing Characteristic");
+          console.log(characteristic);
+          return characteristic.readValue();
+
+        }).then(value => {
+          console.log("Showing Value");
+          console.log(value);
         }).catch(error => {
           console.log(error);
         })
